@@ -20,14 +20,6 @@ def ler_arquivo():
         except:
             return []
 
-
-
-
-
-
-
-
-
 @app.get("/")
 def ola_mundo():
     return "Ola Mundo"
