@@ -13,28 +13,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-def ler_arquivo():  
+
+def ler_arquivo():    
     with open('registros.json', 'r') as dados:
         try:
-            return list(json.load(dados))
+            return  list(json.load(dados))
         except:
             return []
 
-@app.get("/")
-def ola_mundo():
-    return "Ola Mundo"
 
-
-
-
-
-
-
-@app.get("/")
+@app.get("/api/registros")
 def listar_registros():
-    
-    
-    
     registros = ler_arquivo()
 
     if not registros:

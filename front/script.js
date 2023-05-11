@@ -1,4 +1,4 @@
-const apiUrl = 'http://192.168.0.36:8000/api/registros';
+const apiUrl = 'http://localhost:8000/api/registros';
 
 function enviar() {
   const nome = document.getElementById("nome").value;
