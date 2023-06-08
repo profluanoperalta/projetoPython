@@ -1,7 +1,9 @@
 import json
-
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pessoa import Pessoa
+from pessoaDTO import PessoaDTO
+
 
 app = FastAPI()
 
@@ -13,31 +15,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-def ler_arquivo():    
-    with open('registros.json', 'r') as dados:
-        try:
-            return  list(json.load(dados))
-        except:
-            return []
-
-
 @app.get("/api/registros")
 def listar_registros():
-    registros = ler_arquivo()
-
-    if not registros:
-        return {"message": "Nenhum registro encontrado"}
-    
-    return registros
-
+    return Pessoa.listar()
 
 @app.post("/api/registros")
-def adicionar_registro(nome: str = Body(...), nascimento: str = Body(...)):
-    registros = ler_arquivo()
-
-    novo_registro = {"nome": nome, "nascimento": nascimento}
-    registros.append(novo_registro)
-
-    with open('registros.json', 'w') as dados:
-        dados.write(json.dumps(registros, indent=4))
+def adicionar_registro(dto: PessoaDTO):
+    pessoa = Pessoa.salvar(vars(dto))
+    
+    return f'Pessoa {pessoa.to_dict()} salva com sucesso!'
